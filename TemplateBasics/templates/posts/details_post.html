@@ -8,7 +8,7 @@
             <div class="post">
                 <h2><b> {{ post.title }} </b></h2>
                 <div class="icons">
-                    <a href="{% url 'details_post' post.pk %}">Edit</a>
+                    <a href="{% url 'edit_post' post.pk %}">Edit</a>
                     <a href="{% url 'delete_post' post.pk %}">Delete</a>
                 </div>
                 <p>{{ post.content|truncatewords:5|markdown }}</p>
@@ -17,6 +17,25 @@
                 </div>
             </div>
         </div>
+
+        <form method="post" class="form-inline">
+            {% csrf_token %}
+
+            {{ formset.management_form }}
+            <div class="input-group">
+                {% for form in formset %}
+                    <div class="form-row d-flex">
+                        {{ form.content }}
+                        <div class="input-group-append">
+                            <button class="btn btn-primary ms-2">Submit</button>
+                        </div>
+                    </div>
+
+                {% endfor %}
+            </div>
+
+
+        </form>
     </div>
 
 {% endblock %}

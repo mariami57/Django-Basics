@@ -1,10 +1,12 @@
 from datetime import datetime
 
 from django.db.models.query_utils import Q
+from django.forms.models import modelform_factory
 from django.http.response import HttpResponse
 from django.shortcuts import render, redirect
 
-from posts.forms import PostBaseForm, PostCreateForm, PostEditForm, PostDeleteForm, SearchForm
+from posts.forms import PostBaseForm, PostCreateForm, PostEditForm, PostDeleteForm, SearchForm, CommentForm, \
+    CommentFormSet
 from posts.models import Post
 
 
@@ -44,6 +46,12 @@ def add_post(request):
 
 def edit_post(request, pk:int):
     post = Post.objects.get(pk=pk)
+
+    if request.user.is_superuser:
+        PostEditForm = modelform_factory(Post, fields='__all__')
+    else:
+        PostEditForm = modelform_factory(Post, fields=('content',))
+
     form = PostEditForm(request.POST or None, instance=post)
 
     if request.method == "POST" and form.is_valid():
@@ -56,9 +64,19 @@ def edit_post(request, pk:int):
 def post_details(request, pk):
 
     post = Post.objects.get(pk=pk)
+    comment_form_set = CommentFormSet(request.POST or None)
+
+    if request.method == "POST" and comment_form_set.is_valid():
+        for form in comment_form_set:
+            comment = form.save(commit=False)
+            comment.author = request.user.username
+            comment.post = post
+            comment.save()
+
 
     context = {
         "post": post,
+        "formset": comment_form_set,
     }
 
     return render(request, "posts/details_post.html", context)
