@@ -12,6 +12,7 @@ class Post(models.Model):
     author = models.CharField(max_length=50)
     created_at = models.DateTimeField(auto_now_add=True)
     language = models.CharField(choices=LanguageChoices.choices, default = LanguageChoices.OTHER, max_length=50)
+    image = models.ImageField(upload_to='media_files/', null=True, blank=True)
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')

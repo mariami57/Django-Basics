@@ -35,7 +35,7 @@ def dashboard(request):
     return render(request, "posts/dashboard.html", context)
 
 def add_post(request):
-    form = PostCreateForm(request.POST or None)
+    form = PostCreateForm(request.POST or None, request.FILES or None)
     if request.method == "POST" and form.is_valid():
         form.save()
         return redirect('dashboard')
@@ -72,6 +72,7 @@ def post_details(request, pk):
             comment.author = request.user.username
             comment.post = post
             comment.save()
+            return redirect('details_post', pk=post.pk)
 
 
     context = {

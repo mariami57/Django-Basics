@@ -9,6 +9,8 @@ from posts.mixins import ReadOnlyFieldsMixin
 from posts.models import Post, Comment
 from posts.validators import BadWordValidator
 
+from crispy_forms.helper import FormHelper
+
 
 class PostBaseForm(forms.ModelForm):
     content2 = forms.CharField(max_length=10,
@@ -61,7 +63,11 @@ class PostBaseForm(forms.ModelForm):
         return post
 
 class PostCreateForm(PostBaseForm):
-    pass
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.for_id='id-exampleForm'
+        self.helper.form_class = 'blueForms'
 
 class PostEditForm(PostBaseForm):
     pass
