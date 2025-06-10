@@ -13,6 +13,9 @@ class Comment(models.Model):
     def __str__(self):
         return self.comment_text[:20]
 
+    class Meta:
+        ordering = ['-date_and_time_of_publication']
 
-    class Like(models.Model):
-        to_photo = models.ForeignKey(to=Photo, on_delete=models.CASCADE)
+
+class Like(models.Model):
+    to_photo = models.ForeignKey(to=Photo, on_delete=models.CASCADE)
