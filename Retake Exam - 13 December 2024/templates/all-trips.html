@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
 <!-- All Trips page -->
 
@@ -14,16 +14,21 @@
     {% for trip in trips %}
         <div class="post">
             <!-- trip image if there is such, otherwise display the default one -->
-
-            <img src="{{ trip.image_url }}"
-                alt="Cusco, Peru img" />
+            {% if trip.image_url %}
+        <!-- trip image if there is such, otherwise display the default one -->
+                <img src="{{ trip.image_url }}"
+                alt="trip-img" />
+            {% else %}
+                <img src="{% static 'images/default-trip.jpg' %}"
+                alt="default-img" />
+            {% endif %}
 
             <!-- trip destination -->
             <h3 class="title">{{ trip.destination }}</h3>
             <!-- trip start date in format "D d M Y" -->
             <p class="description">{{ trip.start_date|date:"D d M Y" }}</p>
             <!-- trip details button -->
-            <a class="details-btn" href="{% url 'trip_details' trip_pk=1 %}">Details</a>
+            <a class="details-btn" href="{% url 'trip_details' trip.pk %}">Details</a>
         </div>
     {% empty  %}
         <h2>No shared trips</h2>

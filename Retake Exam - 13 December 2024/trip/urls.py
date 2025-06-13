@@ -9,7 +9,7 @@ urlpatterns = [
 
     path("trips/", include([
         path("create/", TripCreateView.as_view(), name="trip_create"),
-        path("<trip_pk>/", include([
+        path("<int:pk>/", include([
             path("edit/", TripEditView.as_view(), name="trip_edit"),
             path("delete/", TripDeleteView.as_view(), name="trip_delete"),
             path("details/", views.trip_details, name="trip_details"),

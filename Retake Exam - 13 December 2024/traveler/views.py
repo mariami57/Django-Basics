@@ -7,8 +7,8 @@ from traveler.models import Traveler
 
 
 # Create your views here.
-def traveler_details_view(request, pk):
-    traveler = Traveler.objects.get(pk=pk)
+def traveler_details_view(request):
+    traveler = Traveler.objects.first()
 
     context = {
         'traveler': traveler,
