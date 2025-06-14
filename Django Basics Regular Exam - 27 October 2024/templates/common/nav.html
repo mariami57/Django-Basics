@@ -1,0 +1,14 @@
+{% load static %}
+<nav>
+      <!-- If there is an author's profile -->
+      <div class="user">
+        <a href="{% url 'dashboard' %}">Dashboard</a>
+        <a href="{% url 'create-post' %}">New Post</a>
+        <a href="{% url 'author-details' %}">Author's Profile</a>
+      </div>
+      <!-- If author's profile has NOT been created -->
+      <div class="guest">
+        <a href="{% url 'author-create' %}">Create Author's Profile</a>
+      </div>
+
+</nav>
