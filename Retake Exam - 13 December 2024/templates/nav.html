@@ -1,0 +1,16 @@
+{% load static %}
+<nav>
+    {% if traveler %}
+        <div class="user">
+            <a href="{% url 'all_trips' %}">All Trips</a>
+            <a href="{% url 'trip_create' %}">Share Trip</a>
+            <a href="{% url 'traveler_details' %}">Traveler's Profile</a>
+        </div>
+    {% else %}
+        <div class="guest">
+            <a href="{% url 'traveler_create' %}">New Traveler's Profile</a>
+        </div>
+    {% endif %}
+
+</nav>
+

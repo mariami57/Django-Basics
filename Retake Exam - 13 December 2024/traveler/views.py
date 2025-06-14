@@ -2,16 +2,20 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView, FormView
 
-from traveler.forms import TravelerCreateForm, TravelerDeleteForm
+from traveler.forms import TravelerCreateForm, TravelerDeleteForm, TravelerEditForm
 from traveler.models import Traveler
 
 
 # Create your views here.
 def traveler_details_view(request):
     traveler = Traveler.objects.first()
+    trips = traveler.trips.order_by('-start_date')
+    has_trips = trips.exists()
 
     context = {
         'traveler': traveler,
+        'trips': trips,
+        'has_trips': has_trips,
     }
     return render(request, "details-traveler.html", context )
 
@@ -23,13 +27,17 @@ class TravelerCreateView(CreateView):
 
 class TravelerEditView(UpdateView):
     model = Traveler
-    form_class = TravelerCreateForm
+    form_class = TravelerEditForm
     template_name = "edit-traveler.html"
-    success_url = reverse_lazy("index")
+    success_url = reverse_lazy("traveler_details")
+
+    def get_object(self, queryset=None):
+        return Traveler.objects.first()
 
 class TravelerDeleteView(DeleteView):
     model = Traveler
-    form_class = TravelerDeleteForm
     template_name = "delete-traveler.html"
     success_url = reverse_lazy("index")
 
+    def get_object(self, queryset=None):
+        return Traveler.objects.first()

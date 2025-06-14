@@ -20,23 +20,7 @@
                 <img id="logo-img" src="{% static 'images/logo-boeing.png' %}" alt="logo" />
             </a>
 
-            <nav>
-
-                <!-- If there is a traveler's profile -->
-
-
-
-                <!-- If the traveler's profile has NOT been created -->
-                <div class="user">
-                    <a href="{% url 'all_trips' %}">All Trips</a>
-                    <a href="{% url 'trip_create' %}">Share Trip</a>
-                    <a href="{% url 'traveler_details' %}">Traveler's Profile</a>
-                </div>
-                <div class="guest">
-                    <a href="{% url 'traveler_create' %}">New Traveler's Profile</a>
-                </div>
-
-            </nav>
+           {% include 'nav.html' %}
         </header>
 
 

@@ -47,8 +47,8 @@ class TripDeleteView(DeleteView,FormView):
     success_url = reverse_lazy("all_trips")
     template_name = "delete-trip.html"
 
-    def get_intial(self):
-        pk =self.kwargs.get(self.pk_url_kwarg)
+    def get_initial(self):
+        pk=self.kwargs.get(self.pk_url_kwarg)
         trip=self.model.objects.get(pk=pk)
         return trip.__dict__
 
