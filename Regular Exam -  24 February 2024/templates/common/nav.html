@@ -1,0 +1,18 @@
+
+
+<!-- Navigation Bar -->
+<h1>
+  <a class="index-navigation" href="{% url 'index' %}"
+    ><span>World of Speed</span></a
+  >
+</h1>
+
+<nav>
+  <!-- if the user has not created a profile -->
+  <a href="{%  url 'create-profile' %}">Create Profile</a>
+
+  <!-- if the user has created a profile -->
+  <a href="{%  url 'car-catalogue' %}">Catalogue</a>
+  <a href="{%  url 'car-create' %}">Create Car</a>
+  <a href="{% url 'details-profile' %}">Profile</a>
+</nav>
