@@ -1,0 +1,12 @@
+{% load static %}
+<nav>
+      <!-- Navigation Bar -->
+      <h1><a class="index-navigation" href="{%  url 'home' %}">Tasty Recipes</a></h1>
+      <!-- if the user has not created a profile -->
+      <a href="{% url 'create-author' %}">Create Profile</a>
+
+      <!-- if the user has created a profile -->
+      <a href="{% url 'recipe-catalogue' %}">Catalogue</a>
+      <a href="{% url 'recipe-create' %}">Create Recipe</a>
+      <a href="{% url 'detail-author' %}">Profile</a>
+</nav>
