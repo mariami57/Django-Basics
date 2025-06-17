@@ -1,9 +1,10 @@
 from django.urls import path, include
 
 from common import views
+from common.views import HomePageView
 
 urlpatterns = [
-    path("", views.home_page_view, name="home"),
+    path("", HomePageView.as_view(), name="home"),
 
 
     path('<int:photo_id>/', include([

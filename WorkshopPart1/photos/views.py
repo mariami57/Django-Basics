@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, DetailView, UpdateView
 
 from common.forms import CommentForm
 from photos.forms import PhotoCreateForm, PhotoEditForm
@@ -6,47 +8,31 @@ from photos.models import Photo
 
 
 # Create your views here.
-def add_photo_view(request):
-    form = PhotoCreateForm(request.POST or None, request.FILES or None)
-
-    if request.method == 'POST' and form.is_valid():
-        form.save()
-        return redirect('home')
-
-    context = {
-        'form': form,
-    }
+class PhotoAddView(CreateView):
+    model = Photo
+    form_class = PhotoCreateForm
+    template_name = 'photos/photo-add-page.html'
+    success_url = reverse_lazy('home')
 
 
+class PhotoDetailView(DetailView):
+    model = Photo
+    template_name = 'photos/photo-details-page.html'
 
-    return render(request, 'photos/photo-add-page.html', context)
+    def get_context_data(self, **kwargs):
+        kwargs.update({
+            "comments": self.object.comment_set.all(),
+            "comment_form": CommentForm(),
+        })
 
-def details_photo_view(request, pk:int):
-    photo = Photo.objects.prefetch_related('comment_set').get(pk=pk)
-    comments = photo.comment_set.all()
-    comment_form = CommentForm()
+        return super().get_context_data(**kwargs)
 
-    context = {
-        'photo': photo,
-        'comments': comments,
-        'comment_form': comment_form,
-    }
+class PhotoEditView(UpdateView):
+    model = Photo
+    form_class = PhotoEditForm
+    template_name = 'photos/photo-edit-page.html'
+    success_url = reverse_lazy('home')
 
-    return render(request, 'photos/photo-details-page.html', context)
-
-def edit_photo_view(request, pk:int):
-    photo = Photo.objects.get(pk=pk)
-    form = PhotoEditForm(request.POST or None, request.FILES or None, instance=photo)
-
-    if request.method == 'POST' and form.is_valid():
-        form.save()
-        return redirect('home')
-
-    context = {
-        'photo': photo,
-        'form': form,
-    }
-    return render(request, 'photos/photo-edit-page.html', context)
 
 
 def photo_delete_view(request, pk:int):

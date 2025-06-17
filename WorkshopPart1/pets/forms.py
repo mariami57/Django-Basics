@@ -1,5 +1,6 @@
 from django import forms
 
+from common.mixins import ReadOnlyMixin
 from pets.models import Pet
 
 
@@ -27,6 +28,6 @@ class PetCreateForm(PetForm):
 class PetEditForm(PetForm):
     pass
 
-class PetDeleteForm(PetForm):
+class PetDeleteForm(ReadOnlyMixin, PetForm):
     pass
 
