@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView, FormView
 
+from Retake_Exam___13_December_2024.utils import get_traveler
 from traveler.forms import TravelerCreateForm, TravelerDeleteForm, TravelerEditForm
 from traveler.models import Traveler
 
@@ -32,7 +33,7 @@ class TravelerEditView(UpdateView):
     success_url = reverse_lazy("traveler_details")
 
     def get_object(self, queryset=None):
-        return Traveler.objects.first()
+        return get_traveler()
 
 class TravelerDeleteView(DeleteView):
     model = Traveler
@@ -40,4 +41,4 @@ class TravelerDeleteView(DeleteView):
     success_url = reverse_lazy("index")
 
     def get_object(self, queryset=None):
-        return Traveler.objects.first()
+        return get_traveler()

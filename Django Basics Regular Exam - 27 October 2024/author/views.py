@@ -4,6 +4,7 @@ from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
 
 from author.forms import AuthorBaseForm, AuthorCreateForm, AuthorEditForm
 from author.models import Author
+from common.utils import get_author
 
 
 # Create your views here.
@@ -12,7 +13,7 @@ class AuthorDetails(DetailView):
     template_name = "author/details-author.html"
 
     def get_object(self, queryset = None):
-        return Author.objects.first()
+        return get_author()
 
 
 class AuthorCreate(CreateView):
@@ -29,7 +30,7 @@ class AuthorEdit(UpdateView):
     success_url = reverse_lazy('author-details')
 
     def get_object(self, queryset = None):
-        return Author.objects.first()
+        return get_author()
 
 
 class AuthorDelete(DeleteView):
@@ -38,5 +39,5 @@ class AuthorDelete(DeleteView):
     success_url = reverse_lazy('index')
 
     def get_object(self, queryset = None):
-        return Author.objects.first()
+        return get_author()
 

@@ -1,5 +1,7 @@
 {% load static %}
+{% load get_user %}
 <nav>
+    {% get_user as traveler %}
     {% if traveler %}
         <div class="user">
             <a href="{% url 'all_trips' %}">All Trips</a>

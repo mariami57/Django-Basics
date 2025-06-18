@@ -24,7 +24,6 @@
     <option name="TEMPLATE_FOLDERS">
       <list>
         <option value="$MODULE_DIR$/templates" />
-        <option value="$MODULE_DIR$/../Retake Exam - 13 December 2024\templates" />
       </list>
     </option>
   </component>
