@@ -2,14 +2,15 @@
 {% load static %}
 
 {% block content %}
-
-
+<section id="catalogue">
+    {% if car_list %}
+            <h1>Total cars: {{ car_list.count }}</h1>
+    {% else %}
+             <p class="no-articles">No cars yet</p>
+    {% endif %}
 
       <!-- Display a card with information about each car (if any)-->
     {% for car in car_list %}
-          <section id="catalogue">
-            <h1>Total cars: {{ car_list.count }}</h1>
-
             <!-- first car-->
             <div class="car-card">
               <div class="image-wrap">
@@ -29,9 +30,7 @@
               </div>
             </div>
           </section>
-    {% empty %}
-        <!-- Display a paragraph: If there are no cars yet-->
-        <p class="no-articles">No cars yet</p>
+
     {% endfor %}
 
 {% endblock %}

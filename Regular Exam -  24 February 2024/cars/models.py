@@ -2,7 +2,7 @@ from django.core.validators import MinLengthValidator, MinValueValidator
 from django.db import models
 
 from cars.validators import YearValidator
-from profiles.models import Profile
+
 
 
 # Create your models here.
@@ -20,4 +20,4 @@ class Car(models.Model):
     year = models.IntegerField(validators=[YearValidator()])
     image_url = models.URLField(unique=True)
     price = models.FloatField(validators=[MinValueValidator(1.0)])
-    owner = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    owner = models.ForeignKey('profiles.Profile', on_delete=models.CASCADE, related_name='cars')

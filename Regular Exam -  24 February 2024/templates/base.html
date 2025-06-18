@@ -1,4 +1,5 @@
 {% load static %}
+{% load get_user %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -7,12 +8,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="{% static 'style/style.css' %}" />
     <title>WorldOfSpeed</title>
+
   </head>
 
   <body>
     <div id="box">
       <header>
-          {% include 'common/nav.html' %}
+                      <!-- Navigation Bar -->
+            <h1>
+              <a class="index-navigation" href="{% url 'index' %}"
+                ><span>World of Speed</span></a
+              >
+            </h1>
+
+            <nav>
+                {% get_user as profile %}
+                {% if profile %}
+                <!-- if the user has created a profile -->
+                      <a href="{%  url 'car-catalogue' %}">Catalogue</a>
+                      <a href="{%  url 'car-create' %}">Create Car</a>
+                      <a href="{% url 'details-profile' %}">Profile</a>
+
+                {% else %}
+                        <a href="{% url 'create-profile' %}">Create Profile</a>
+                {% endif %}
+            </nav>
       </header>
 
         {% block content %}

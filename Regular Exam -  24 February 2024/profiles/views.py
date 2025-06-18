@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
 
+from DjangoProject.utils import get_profile
 from profiles.forms import ProfileCreateForm, ProfileEditForm, ProfileDeleteForm
 from profiles.models import Profile
 
@@ -14,20 +15,20 @@ class ProfileDetailView(DetailView):
     template_name = "profile/profile-details.html"
 
     def get_object(self, queryset=None):
-        return Profile.objects.first()
+        return get_profile()
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        profile = self.get_object()
-        total_cost = profile.car_set.aggregate(total=Sum('price'))['total'] or 0
-        context['total_cost'] = total_cost
-        return context
+        total_cost = self.object.cars.aggregate(total=Sum('price'))['total'] or 0
 
+        kwargs.update({'total_cost': total_cost})
+        return super().get_context_data(**kwargs)
 class ProfileCreateView(CreateView):
     model = Profile
     form_class = ProfileCreateForm
     template_name = "profile/profile-create.html"
     success_url = reverse_lazy('car-catalogue')
+
+
 
 class ProfileEditView(UpdateView):
     model = Profile
@@ -36,7 +37,7 @@ class ProfileEditView(UpdateView):
     success_url = reverse_lazy('details-profile')
 
     def get_object(self, queryset=None):
-        return Profile.objects.first()
+        return get_profile()
 
 class ProfileDeleteView(DeleteView):
     model = Profile
@@ -44,7 +45,7 @@ class ProfileDeleteView(DeleteView):
     success_url = reverse_lazy('index')
 
     def get_object(self, queryset=None):
-        return Profile.objects.first()
+        return get_profile()
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
