@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <main>
+
+        <!-- Organizer's Profile Details Section -->
+
+        <section id="details">
+            <div id="details-wrapper">
+                <!-- company name -->
+                <h2>{{ organizer.company_name }}</h2>
+                <!-- default image -->
+
+                <img id="details-img" src="{% static 'images/organizer-default.png' %}" alt="profile img" />
+
+                <!-- phone number -->
+                <p id="nutrition"><span>Phone: </span>{{ organizer.phone_number }}</p>
+
+                {% if organizer.website %}
+                        <!-- website if provided -->
+                        <p id="nutrition"><span>Website: </span>{{ organizer.website }}</p>
+                {% endif %}
+
+                {%  if events %}
+                    <div id="info-wrapper">
+                        <div id="details-description">
+                            <!-- if there are upcoming events, list data -->
+
+                                <p><span>Upcoming Events:</span></p>
+                                {% for event in events %}
+                                    <!-- <ul> element containing all upcoming events, ordered by start_time ascending -->
+                                    <ul>
+                                        <!-- <li> element for each event's data in the format: "{start_time_year}-{start_time_month}-{start_time_day} {start_time_hour}:{start_time_minute} {slogan} @ {location}" -->
+                                        <!-- event 1-->
+                                        <li>{{ event.start_time|date:"Y-m-d h:i" }} {{ event.slogan }} @ {{ event.location }}</li>
+
+                                    </ul>
+                            {% endfor %}
+                        {% endif %}
+
+                    </div>
+                    <!--Edit and Delete buttons -->
+                    <div id="action-buttons">
+                        <a href="{% url 'organizer_edit' %}" id="edit-btn">Edit</a>
+                        <a href="{% url 'organizer_delete' %}" id="delete-btn">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+{% endblock %}

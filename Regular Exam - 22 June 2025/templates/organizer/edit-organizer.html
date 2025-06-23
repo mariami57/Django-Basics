@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <main>
+
+        <!-- Edit Organizer's Profile Form -->
+
+        <section id="register">
+            <div class="form">
+                <h2>Edit Organizer's Profile</h2>
+                <form class="register-form" method="post">
+                    {% csrf_token %}
+                    {{ form }}
+
+                    <button type="submit">Edit</button>
+
+                </form>
+            </div>
+        </section>
+
+
+    </main>
+{% endblock %}

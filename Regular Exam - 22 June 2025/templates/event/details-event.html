@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <main>
+
+        <!-- Event Details -->
+        <section id="details">
+            <div id="details-wrapper">
+                <h2>Event Details</h2>
+                {% if event.banner_url %}
+                    <img src="{{ event.banner_url }}"
+                         alt="event bannerimg" />
+                {% else %}
+                    <img src="{% static 'images/event-default-img.png' %}"
+                         alt="event bannerimg" />
+                {% endif %}
+                <!-- event slogan -->
+                <p id="details-title">
+                    {{ event.slogan }}
+                </p>
+                <div id="info-wrapper">
+                    <div id="details-description">
+                        <!-- event start time in format "D d M Y H:i" -->
+                        <p class="description">
+                            {{ event.start_time|date:'D d M Y H:i' }}
+                        </p>
+                        <!-- event location -->
+                        <p class="description">
+                            {{ event.location }}
+                        </p>
+                        <!-- event available tickets -->
+                        <p>
+                           {{ event.available_tickets }} available tickets
+                        </p>
+                        <!-- event key features if provided, otherwise do not display the paragraph -->
+                        {% if event.key_features %}
+                            <p>
+                                <strong>Key features: </strong>{{ event.key_features }}
+                            </p>
+                        {% endif %}
+
+                    </div>
+
+                    <!--Edit and Delete buttons -->
+                    <div id="action-buttons">
+                        <a href="{% url 'edit-event' event.pk %}" id="edit-btn">Edit</a>
+                        <a href="{% url 'delete-event' event.pk %}" id="delete-btn">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+{% endblock %}
